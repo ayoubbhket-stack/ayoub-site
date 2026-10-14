@@ -48,6 +48,14 @@ export const DEFAULT_CONTENT = {
     { icon: '🎓', title: 'Marketing Course', text: 'Comprehensive digital marketing courses for beginners and professionals looking to grow.' },
     { icon: '⚙️', title: 'Management', text: 'Full management of ad accounts and growth strategy from start to finish.' },
   ],
+  websites: {
+    title: 'Websites I build',
+    text: 'Fast, mobile-first websites wired for ads and lead tracking: Tag Manager, Meta Pixel, Google Ads and a control panel to edit everything yourself.',
+    items: [
+      { name: 'VANTA EYE', category: '3D E-commerce store', url: 'https://vanta-eye.vercel.app/', image: { mediaId: null, legacy: null, src: '/work/vanta-eye.jpg' } },
+      { name: 'Job Market Academy', category: 'Marketing agency website', url: 'https://digitalmarketingagency.agency/', image: { mediaId: null, legacy: null, src: '/work/job-market-academy.jpg' } },
+    ],
+  },
   results: {
     title: 'Inside the ad accounts',
     text: 'Screenshots from live campaigns. Drag sideways and tap any card to view it full size.',
@@ -77,5 +85,6 @@ export function imgUrl(field) {
   if (!field) return null;
   if (field.mediaId) return `/api/media/${field.mediaId}`;
   if (field.legacy) return `${OLD_SITE}/${encodeURI(field.legacy)}`;
+  if (field.src) return field.src;
   return null;
 }

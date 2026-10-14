@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 
 const t = (max = 300) => z.string().max(max).default('');
 const url = z.string().max(300).refine((v) => !v || /^https?:\/\//.test(v), 'Links must start with https://').default('');
-const img = z.object({ mediaId: z.string().uuid().nullable().optional(), legacy: z.string().max(200).nullable().optional() }).nullable();
+const img = z.object({ mediaId: z.string().uuid().nullable().optional(), legacy: z.string().max(200).nullable().optional(), src: z.string().max(300).regex(/^(\/|https:\/\/)/).nullable().optional() }).nullable();
 
 const schema = z.object({
   brand: z.object({ name: z.string().trim().min(2, 'Name is required.').max(60), role: t(80), logo: img, seoTitle: t(70), seoDescription: t(170), gtmId: z.string().trim().regex(/^(GTM-[A-Z0-9]+)?$/, 'GTM ID looks like GTM-XXXXXXX').default('') }),
@@ -18,6 +18,7 @@ const schema = z.object({
   about: z.object({ photo: img, name: t(80), facts: z.array(z.string().max(60)).max(6), paragraphs: z.array(z.string().max(800)).max(5), skills: z.array(z.string().max(40)).max(12) }),
   stats: z.array(z.object({ value: z.string().regex(/^\d{1,6}$/, 'Stat values must be whole numbers'), suffix: t(4), label: t(40) })).max(4),
   services: z.array(z.object({ icon: t(8), title: z.string().trim().min(2).max(60), text: t(300) })).max(8),
+  websites: z.object({ title: t(80), text: t(300), items: z.array(z.object({ name: z.string().trim().min(2, 'Website name is required').max(60), category: t(60), url: z.string().trim().max(300).regex(/^https?:\/\//, 'Website links must start with https://'), image: img })).max(20) }),
   results: z.object({ title: t(80), text: t(300), items: z.array(z.object({ mediaId: z.string().uuid().nullable().optional(), legacy: z.string().max(200).nullable().optional(), caption: t(120) })).max(30) }),
   consult: z.object({ title: t(80), text: t(300), industries: z.array(z.string().max(40)).max(12) }),
   closing: z.object({ title: t(80), text: t(300) }),

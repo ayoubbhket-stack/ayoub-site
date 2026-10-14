@@ -13,6 +13,7 @@ export default async function Landing() {
   const [closeA, closeB] = c.closing.title.includes('|') ? c.closing.title.split('|') : [c.closing.title, ''];
   const logo = imgUrl(c.brand.logo);
   const photo = imgUrl(c.about.photo);
+  const sites = (c.websites?.items || []).map((w) => ({ ...w, img: imgUrl(w.image) }));
   const results = c.results.items.map((it) => ({ url: imgUrl(it), caption: it.caption })).filter((x) => x.url);
   const ticker = [...c.ticker, ...c.ticker];
   const gtm = /^GTM-[A-Z0-9]+$/.test(c.brand.gtmId || '') ? c.brand.gtmId : null;
@@ -30,7 +31,7 @@ export default async function Landing() {
             {logo && <img src={logo} alt="" />}
             <div><strong>{c.brand.name}</strong><span>{c.brand.role}</span></div>
           </a>
-          <nav className="links" aria-label="Sections"><a href="#about">About</a><a href="#services">Services</a><a href="#results">Results</a><a href="#consult">Consultation</a></nav>
+          <nav className="links" aria-label="Sections"><a href="#about">About</a><a href="#services">Services</a><a href="#websites">Websites</a><a href="#results">Results</a><a href="#consult">Consultation</a></nav>
           <div className="head-cta">
             {c.contact.facebookUrl && <a className="btn ghost fb" href={c.contact.facebookUrl} target="_blank" rel="noopener" data-track="facebook_header">Facebook</a>}
             <a className="btn wa" href={wa} target="_blank" rel="noopener" data-track="whatsapp_header">WhatsApp</a>
@@ -96,6 +97,23 @@ export default async function Landing() {
             </div>
           </div>
         </section>
+
+        {sites.length > 0 && (
+          <section id="websites" style={{ paddingTop: 0 }}>
+            <div className="wrap">
+              <div className="res-head rv" style={{ paddingInline: 0 }}><div><p className="label accent">Web design</p><h2 style={{ marginTop: 12 }}>{c.websites.title}</h2></div><p>{c.websites.text}</p></div>
+              <div className="sites">
+                {sites.map((w, i) => (
+                  <a key={w.url + i} className="site rv" style={{ '--d': `${i * 90}ms` }} href={w.url} target="_blank" rel="noopener" data-track={`website_${w.name}`}>
+                    <div className="shot">{w.img ? <img src={w.img} alt={`${w.name} website`} loading="lazy" /> : <span>{w.name}</span>}</div>
+                    <div className="meta"><div><span className="label">{w.category}</span><h3>{w.name}</h3></div><span className="go" aria-hidden="true">↗</span></div>
+                  </a>
+                ))}
+              </div>
+              <div className="sites-cta rv"><p>Need a website that brings you leads?</p><a className="btn" href={`${wa}?text=${encodeURIComponent('Hi Ayoub, I want a website')}`} target="_blank" rel="noopener" data-track="whatsapp_websites">Get a website quote <span aria-hidden="true">→</span></a></div>
+            </div>
+          </section>
+        )}
 
         {results.length > 0 && (
           <section id="results" className="results">

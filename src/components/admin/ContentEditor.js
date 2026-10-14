@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { api, Dropzone, F, Toggle, uploadFiles, useAdmin } from './ui';
 
 const OLD = 'https://ayoub-bhket.pages.dev';
-const src = (f) => (f?.mediaId ? `/api/media/${f.mediaId}` : f?.legacy ? `${OLD}/${encodeURI(f.legacy)}` : null);
+const src = (f) => (f?.mediaId ? `/api/media/${f.mediaId}` : f?.legacy ? `${OLD}/${encodeURI(f.legacy)}` : f?.src || null);
 const list = (v) => v.split(',').map((x) => x.trim()).filter(Boolean);
 
 function Img({ label, value, onChange }) {
@@ -14,10 +14,10 @@ function Img({ label, value, onChange }) {
   return (
     <div className="stack" style={{ gap: 8 }}>
       <span className="label" style={{ fontSize: '.64rem' }}>{label}</span>
-      {url && <div className="img-tile" style={{ maxWidth: 200 }}><img src={url} alt="" /><div className="bar"><span className="label" style={{ fontSize: '.58rem' }}>{value?.mediaId ? 'Saved on new site' : 'From old site'}</span></div></div>}
+      {url && <div className="img-tile" style={{ maxWidth: 200 }}><img src={url} alt="" /><div className="bar"><span className="label" style={{ fontSize: '.58rem' }}>{value?.mediaId ? 'Uploaded' : value?.legacy ? 'From old site' : 'Built-in'}</span></div></div>}
       <Dropzone multiple={false} busy={busy} label={url ? 'Replace image' : 'Upload image'} onFiles={async (files) => {
         if (!files.length) return; setBusy(true);
-        try { const [m] = await uploadFiles(files.slice(0, 1)); onChange({ mediaId: m.id, legacy: null }); toast('Image uploaded — press Save to publish'); } catch (e) { toast(e.message, 'bad'); } finally { setBusy(false); }
+        try { const [m] = await uploadFiles(files.slice(0, 1)); onChange({ mediaId: m.id, legacy: null, src: null }); toast('Image uploaded — press Save to publish'); } catch (e) { toast(e.message, 'bad'); } finally { setBusy(false); }
       }} />
     </div>
   );
@@ -122,6 +122,13 @@ export default function ContentEditor({ initial, pending }) {
       <section className="panel"><div className="ph"><h2>Services</h2></div><div className="pb">
         <Rows items={c.services} blank={{ icon: '✨', title: '', text: '' }} add="Add service" onChange={(a) => set('services', a)} render={(s, p) => (
           <div className="form-grid"><F label="Icon (emoji)"><input className="input" value={s.icon} onChange={(e) => p({ icon: e.target.value })} /></F><F label="Title"><input className="input" value={s.title} onChange={(e) => p({ title: e.target.value })} /></F><F label="Description" full><textarea className="textarea" style={{ minHeight: 60 }} value={s.text} onChange={(e) => p({ text: e.target.value })} /></F></div>
+        )} />
+      </div></section>
+
+      <section className="panel"><div className="ph"><h2>Websites I built</h2><span className="label">Shown in this order</span></div><div className="pb stack" style={{ gap: 14 }}>
+        <div className="form-grid">{inp('websites.title', 'Section title')}{inp('websites.text', 'Section text')}</div>
+        <Rows items={c.websites.items} blank={{ name: '', category: '', url: 'https://', image: null }} add="Add website" onChange={(a) => set('websites.items', a)} render={(w, p) => (
+          <div className="form-grid"><F label="Website name"><input className="input" value={w.name} onChange={(e) => p({ name: e.target.value })} /></F><F label="Type (e.g. Clinic website)"><input className="input" value={w.category} onChange={(e) => p({ category: e.target.value })} /></F><F label="Link" full><input className="input mono" value={w.url} onChange={(e) => p({ url: e.target.value.trim() })} /></F><div className="full"><Img label="Screenshot" value={w.image} onChange={(v) => p({ image: v })} /></div></div>
         )} />
       </div></section>
 

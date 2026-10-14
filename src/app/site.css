@@ -209,3 +209,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
 .lead-ok strong{font:700 1.3rem var(--display)}
 .field select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat}
 [hidden]{display:none!important}
+
+.sites{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr));gap:20px}
+.site{display:block;background:var(--bg-2);border:1px solid var(--line);overflow:hidden;transition:border-color .3s,transform .3s var(--ease)}
+.site:hover{border-color:var(--accent);transform:translateY(-4px)}
+.site .shot{aspect-ratio:1200/783;overflow:hidden;background:var(--bg-3);display:grid;place-items:center;color:var(--dim)}
+.site .shot img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .8s var(--ease)}
+.site:hover .shot img{transform:scale(1.04)}
+.site .meta{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 20px}
+.site .meta h3{font:600 1.25rem/1.2 var(--display);margin-top:6px}
+.site .go{width:42px;height:42px;flex:none;display:grid;place-items:center;border:1px solid var(--line);color:var(--accent);font-size:1.1rem;transition:background .3s,color .3s}
+.site:hover .go{background:var(--accent);color:var(--ink)}
+.sites-cta{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:28px;padding:22px 24px;border:1px dashed var(--line)}
+.sites-cta p{font:600 1.1rem/1.3 var(--display)}
