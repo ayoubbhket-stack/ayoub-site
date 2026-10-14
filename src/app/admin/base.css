@@ -20,8 +20,8 @@
   --warn: #f5b13d;
   --bad: #ff5a4f;
 
-  --font-display: 'Clash Display', 'Arial Black', system-ui, sans-serif;
-  --font-body: 'Satoshi', 'Helvetica Neue', Arial, system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Arial Black', system-ui, sans-serif;
+  --font-body: 'Inter', 'Helvetica Neue', Arial, system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
   --gutter: clamp(16px, 4vw, 56px);
