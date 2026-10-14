@@ -13,15 +13,15 @@ export function mountChart(host, reduced) {
   // studio environment for reflections: white softboxes + orange strip
   const env = new THREE.Scene(); env.background = new THREE.Color('#050505');
   const panel = (w, h, c, k, p) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(c).multiplyScalar(k), side: THREE.DoubleSide })); m.position.set(...p); m.lookAt(0, 0, 0); env.add(m); };
-  panel(16, 5, '#fff', 2.4, [0, 9, 7]); panel(12, 6, '#eee', 1.2, [-4, 3, 12]); panel(3, 12, '#ff6a00', 3, [11, 1, 2]); panel(2, 10, '#fff', 1.4, [-11, -1, 4]);
+  panel(16, 5, '#fff', 2.4, [0, 9, 7]); panel(12, 6, '#eee', 1.2, [-4, 3, 12]); panel(3, 12, '#2ee59d', 3, [11, 1, 2]); panel(2, 10, '#fff', 1.4, [-11, -1, 4]);
   const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(env, 0.02).texture;
 
   const cam = new THREE.PerspectiveCamera(32, 1, 0.1, 200);
   const rig = new THREE.Group(); scene.add(rig);
   const chart = new THREE.Group(); rig.add(chart);
   const heights = [1.6, 2.4, 2.0, 3.4, 4.2, 3.8, 5.6, 7.2];
-  const glass = new THREE.MeshPhysicalMaterial({ color: '#ff6a00', metalness: 0.15, roughness: 0.12, transmission: 0.55, thickness: 1.2, ior: 1.45, clearcoat: 1, envMapIntensity: 1.6 });
-  const solid = new THREE.MeshPhysicalMaterial({ color: '#ff6a00', metalness: 0.4, roughness: 0.25, clearcoat: 1, emissive: '#3a1200', envMapIntensity: 1.4 });
+  const glass = new THREE.MeshPhysicalMaterial({ color: '#2ee59d', metalness: 0.15, roughness: 0.12, transmission: 0.55, thickness: 1.2, ior: 1.45, clearcoat: 1, envMapIntensity: 1.6 });
+  const solid = new THREE.MeshPhysicalMaterial({ color: '#2ee59d', metalness: 0.4, roughness: 0.25, clearcoat: 1, emissive: '#003a24', envMapIntensity: 1.4 });
   const dark = new THREE.MeshPhysicalMaterial({ color: '#1a1a1a', metalness: 0.9, roughness: 0.3, clearcoat: 0.6 });
   const bars = heights.map((h, i) => {
     const m = new THREE.Mesh(new RoundedBoxGeometry(1, 1, 1, 4, 0.12), i === heights.length - 1 ? solid : (i % 2 ? glass : dark));
@@ -35,14 +35,14 @@ export function mountChart(host, reduced) {
   const dot = new THREE.Mesh(new THREE.SphereGeometry(0.42, 32, 24), new THREE.MeshPhysicalMaterial({ color: '#ffffff', metalness: 1, roughness: 0.04, iridescence: 0.8, iridescenceIOR: 1.8 }));
   dot.position.copy(pts.at(-1)); dot.scale.setScalar(0.001); chart.add(dot);
   // floor glow
-  const glow = new THREE.Mesh(new THREE.CircleGeometry(9, 64), new THREE.MeshBasicMaterial({ color: '#ff6a00', transparent: true, opacity: 0.12 }));
+  const glow = new THREE.Mesh(new THREE.CircleGeometry(9, 64), new THREE.MeshBasicMaterial({ color: '#2ee59d', transparent: true, opacity: 0.12 }));
   glow.rotation.x = -Math.PI / 2; glow.position.y = -0.01; chart.add(glow);
   // floating shapes
   const floaters = [];
   [[new THREE.TorusGeometry(1.1, 0.12, 16, 64), solid, [-9, 7, -4]], [new THREE.IcosahedronGeometry(0.9, 0), dark, [9, 9, -2]], [new THREE.OctahedronGeometry(0.7), solid, [7, 1.5, 4]]].forEach(([g, m, p]) => { const o = new THREE.Mesh(g, m); o.position.set(...p); o.userData.b = new THREE.Vector3(...p); o.userData.s = Math.random() * 6; rig.add(o); floaters.push(o); });
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x220c00, 0.6));
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x002a1a, 0.6));
   const key = new THREE.DirectionalLight(0xffffff, 1.4); key.position.set(-6, 10, 8); scene.add(key);
-  const rim = new THREE.PointLight(0xff6a00, 220, 60); rim.position.set(8, 6, -4); scene.add(rim);
+  const rim = new THREE.PointLight(0x2ee59d, 220, 60); rim.position.set(8, 6, -4); scene.add(rim);
 
   let narrow = false;
   const size = () => {
