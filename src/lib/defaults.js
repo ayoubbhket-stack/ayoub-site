@@ -2,7 +2,10 @@
 // is editable from /admin → Content; saved values are stored in the database.
 export const OLD_SITE = 'https://ayoub-bhket.pages.dev';
 
+export const WEB_SERVICE = { icon: '💻', title: 'Website Design', text: 'Fast, mobile-friendly websites and landing pages with your own domain, a control panel, and full tracking for Meta, Google Ads and Analytics.' };
+
 export const DEFAULT_CONTENT = {
+  contentVersion: 2,
   brand: {
     name: 'Ayoub Bhket',
     role: 'Media Buyer & Digital Marketing',
@@ -47,6 +50,7 @@ export const DEFAULT_CONTENT = {
     { icon: '📊', title: 'Media Buying', text: 'Managing and optimizing Meta & Google Ads campaigns for maximum return on ad spend.' },
     { icon: '🎓', title: 'Marketing Course', text: 'Comprehensive digital marketing courses for beginners and professionals looking to grow.' },
     { icon: '⚙️', title: 'Management', text: 'Full management of ad accounts and growth strategy from start to finish.' },
+    WEB_SERVICE,
   ],
   websites: {
     title: 'Websites I build',

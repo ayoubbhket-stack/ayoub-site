@@ -23,6 +23,7 @@ const schema = z.object({
   consult: z.object({ title: t(80), text: t(300), industries: z.array(z.string().max(40)).max(12) }),
   closing: z.object({ title: t(80), text: t(300) }),
   footer: t(160),
+  contentVersion: z.number().int().optional(),
 });
 
 export const PUT = handler(async (req) => {
