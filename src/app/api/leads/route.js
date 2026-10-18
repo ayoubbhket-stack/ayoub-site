@@ -30,7 +30,7 @@ function sourceOf(b) {
   } catch { return 'direct'; }
 }
 
-// Forwards a saved lead to an automation webhook (n8n). Does nothing unless
+// Forwards a saved lead to an automation webhook (n8n or Google Apps Script). Does nothing unless
 // N8N_WEBHOOK_URL is set, and never fails the request: the lead is already
 // stored in the database before this runs.
 async function notifyWebhook(payload) {
@@ -41,7 +41,7 @@ async function notifyWebhook(payload) {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(4000),
+      signal: AbortSignal.timeout(8000),
     });
   } catch (e) {
     console.error('[leads] webhook failed:', e?.message || e);
