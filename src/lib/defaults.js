@@ -2,10 +2,11 @@
 // is editable from /admin → Content; saved values are stored in the database.
 export const OLD_SITE = 'https://ayoub-bhket.pages.dev';
 
+export const NOIRE_SITE = { name: 'NOIRÉ', category: 'Bilingual perfume store (Arabic / English)', url: 'https://noire-tan.vercel.app/', image: { mediaId: null, legacy: null, src: '/work/noire.jpg' } };
 export const WEB_SERVICE = { icon: '💻', title: 'Website Design', text: 'Fast, mobile-friendly websites and landing pages with your own domain, a control panel, and full tracking for Meta, Google Ads and Analytics.' };
 
 export const DEFAULT_CONTENT = {
-  contentVersion: 2,
+  contentVersion: 3,
   brand: {
     name: 'Ayoub Bhket',
     role: 'Media Buyer & Digital Marketing',
@@ -56,6 +57,7 @@ export const DEFAULT_CONTENT = {
     title: 'Websites I build',
     text: 'Fast, mobile-first websites wired for ads and lead tracking: Tag Manager, Meta Pixel, Google Ads and a control panel to edit everything yourself.',
     items: [
+      NOIRE_SITE,
       { name: 'VANTA EYE', category: '3D E-commerce store', url: 'https://vanta-eye.vercel.app/', image: { mediaId: null, legacy: null, src: '/work/vanta-eye.jpg' } },
       { name: 'Job Market Academy', category: 'Marketing agency website', url: 'https://digitalmarketingagency.agency/', image: { mediaId: null, legacy: null, src: '/work/job-market-academy.jpg' } },
     ],
